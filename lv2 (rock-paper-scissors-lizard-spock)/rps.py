@@ -18,13 +18,17 @@ def winner(player1, player2):
             return("Player2 wins!")
     return None
 
-while True:
-    player1 = input("Player1, enter your choice: ")
-    player2 = input("Player2, enter your choice: ")
+def main():
+    while True:
+        player1 = input("Player1, enter your choice: ")
+        player2 = input("Player2, enter your choice: ")
 
-    result = winner(player1, player2)
-    print(result)
+        result = winner(player1, player2)
+        print(result)
 
-    resume = input("\nType 'yes' to continue and 'no' to quit the game: ")
-    if resume == "no":
-        break
+        resume = input("\nType 'yes' to continue and 'no' to quit the game: ")
+        if resume == "no":
+            break
+
+if __name__ == "__main__":
+    main()
