@@ -1,4 +1,7 @@
 def winner(player1, player2):
+    if not check_inputs(player1, player2):
+        return False
+
     if player1 == player2:
         return("draw")
     elif player1 == "rock":
@@ -16,14 +19,14 @@ def winner(player1, player2):
             return("player1")
         if player2 == "scissors":
             return("player2")
-    return None
+    return False
+
+def is_valid_input(inp):
+    choices = ["rock", "paper", "scissors"]
+    return inp in choices
 
 def check_inputs(p1, p2):
-    choices = ["rock", "paper", "scissors"]
-    if p1 in choices and p2 in choices:
-        return True
-    else:
-        return False
+    return is_valid_input(p1) and is_valid_input(p2)
 
 def main():
     while True:
@@ -44,10 +47,32 @@ def main():
 def run_test(player1, player2, expected):
     print(player1, "vs.", player2)
     result = winner(player1, player2)
-    assert result == expected
+    try:
+        assert result == expected
+    except AssertionError:
+        print("expected: ", expected)
+        print("result: ", result)
+        raise # za traceback error poruku
+    print("PASS")
+
+def test_inputs(inp, expected):
+    result = is_valid_input(inp)
+    try:
+        assert result == expected
+    except AssertionError:
+        print("expected: ", expected)
+        print("result: ", result)
+        raise # za traceback error poruku
     print("PASS")
 
 def unit_tests():
+    test_inputs("rock", True)
+    test_inputs("paper", True)
+    test_inputs("scissors", True)
+    test_inputs("pero", False)
+    test_inputs("", False)
+    test_inputs(8, False)
+
     run_test("rock", "paper", "player2")
     run_test("rock", "scissors", "player1")
     run_test("rock", "rock", "draw")
@@ -57,6 +82,10 @@ def unit_tests():
     run_test("scissors", "scissors", "draw")
     run_test("scissors", "rock", "player2")
     run_test("scissors", "paper", "player1")
+    run_test("pero", "djuro", False)
+    run_test("", "scissors", False)
+    run_test("pero", "pero", False)
+    
 
 if __name__ == "__main__":
     # main()
