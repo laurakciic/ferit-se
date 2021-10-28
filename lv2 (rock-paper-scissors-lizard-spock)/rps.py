@@ -18,12 +18,24 @@ def winner(player1, player2):
             return("Player2 wins!")
     return None
 
+def check_inputs(p1, p2):
+    choices = ["rock", "paper", "scissors"]
+    if p1 in choices and p2 in choices:
+        return True
+    else:
+        return False
+
+
 def main():
     while True:
         player1 = input("Player1, enter your choice: ")
         player2 = input("Player2, enter your choice: ")
-
-        result = winner(player1, player2)
+        if check_inputs(player1, player2):
+            result = winner(player1, player2)
+        else:
+            print("Wrong typo, try again ")
+            continue
+        
         print(result)
 
         resume = input("\nType 'yes' to continue and 'no' to quit the game: ")
