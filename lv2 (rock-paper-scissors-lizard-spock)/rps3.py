@@ -85,13 +85,13 @@ def winner(player1, player2, player3):
         if player3 == "lizard":
             pass
         if player3 == "scissors":
-            p1Points += 1
+            p3Points += 1
         if player3 == "paper":
-            p3Points += 1
-        if player3 == "lizard":
             p1Points += 1
+        if player3 == "lizard":
+            pass
         if player3 == "spock":
-            p3Points += 1
+            p1Points += 1
     
     elif player1 == "spock":
         if player2 == "spock":
@@ -149,31 +149,31 @@ def winner(player1, player2, player3):
         if player3 == "lizard":
             p2Points += 1
         if player3 == "spock":
-            p3Points + 1
+            p3Points += 1
 
     elif player2 == "lizard":
         if player3 == "lizard":
             pass
         if player3 == "paper":
-            p2Points + 1
+            p2Points += 1
         if player3 == "rock":
-            p3Points + 1
+            p3Points += 1
         if player3 == "scissors":
-            p3Points + 1
+            p3Points += 1
         if player3 == "spock":
-            p2Points + 1
+            p2Points += 1
     
     elif player2 == "spock":
         if player3 == "spock":
             pass
         if player3 == "paper":
-            p3Points + 1
+            p3Points += 1
         if player3 == "rock":
-            p2Points + 1
+            p2Points += 1
         if player3 == "lizard":
-            p3Points + 1
+            p3Points += 1
         if player3 == "scissors":
-            p2Points + 1
+            p2Points += 1
     
     print("P1:" + str(p1Points), "P2:" + str(p2Points), "P3:" + str(p3Points))
     if p1Points == p2Points == p3Points:
@@ -256,8 +256,9 @@ def unit_tests():
     run_test("lizard", "lizard", "lizard", "draw")
     run_test("spock", "spock", "spock", "draw")
 
+    run_test("lizard", "spock", "scissors", "draw")     
     run_test("rock", "paper", "lizard", "draw")
-    run_test("paper", "scissors", "lizard", "player2")
+    run_test("scissors", "paper", "spock", "draw")
 
     run_test("paper", "paper", "rock", "Player1 and Player2 share 1st place.")
     run_test("paper", "rock", "paper", "Player1 and Player3 share 1st place.")
@@ -267,10 +268,15 @@ def unit_tests():
     run_test("rock", "paper", "rock", "player2")
     run_test("rock", "rock", "paper", "player3")
 
-    # run_test("pero", "djuro", False)
-    # run_test("", "scissors", False)
-    # run_test("pero", "pero", False)
-    
+    run_test("rock", "lizard", "scissors", "player1")
+    run_test("paper", "scissors", "lizard", "player2")
+    run_test("scissors", "spock", "rock", "player2")
+
+    run_test("scissors", "spock", "slizard", False)
+    run_test("pero", "djuro", "spock", False)
+    run_test("", "scissors", "", False)
+    run_test("pero", "pero", "lizard", False)
+    run_test("", "", "", False)
 
 if __name__ == "__main__":
     # main()
