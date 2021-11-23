@@ -25,3 +25,5 @@ previous lab. Hint: runserver errors will tell you what to do.
 ## Work
 
 We are continuing the django tutorial part 3 on [django docs](https://docs.djangoproject.com/en/3.1/intro/tutorial03/)
+
+Note: part 6 and 7 from the tutorial aren't done yet
