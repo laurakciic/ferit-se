@@ -110,7 +110,7 @@ pip freeze
 cd lv5
 ```
 
-#### Prints required packets in `requirements.txt`
+#### Prints required packages in `requirements.txt`
 ```
 pip freeze > requirements.txt
 ```
@@ -120,7 +120,7 @@ pip freeze > requirements.txt
 ls
 ```
 
-#### Installation of required packets from `requirements.txt` file
+#### Installation of required packages from `requirements.txt` file
 ```
 pip install -r requirements.txt
 ```
