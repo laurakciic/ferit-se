@@ -1,0 +1,14 @@
+{% extends 'app/base.html' %}   
+
+{% block content %}       <!-- ovaj template ucitava se kad otvorimo localhost accounts login  -->
+<div class="container">
+    <div class="row">                                   <!-- submitat ce post request na isti url i uhvatit ce ga ista ova -->
+        <form method="post" accept-charset="utf-8">     <!-- akcija django.contrib.auth.urls koja ce obraditi ovu formu -->
+            {% csrf_token %}
+            {{ form.as_p }}   <!-- renderirat ce formu kao paragrafe -->
+
+            <input type="submit" value="Sign in" class="btn btn-primary">
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -19,6 +19,7 @@ from app import views   # importamo views jer zelimo u slucaju root urla okinuti
                         # cilj je da kad otvorimo localhost:8000 da odma otvori index, ne moramo pisat cijelu putanju 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')),
     path('images/', include('app.urls')),   # cijelu app.urls kacimo u images path jer onda svaka putanja sto pocinje s images gledat ce urlove s app.images
     path('', views.index, name='index'), 
 ]

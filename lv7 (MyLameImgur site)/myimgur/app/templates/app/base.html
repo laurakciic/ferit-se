@@ -28,10 +28,31 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
+          <ul class="navbar-nav mr-auto"> <!-- mr-auto sve vuce ulijevo -->
             <li class="nav-item active">
               <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
+          </ul>
+
+          <ul class="navbar-nav ml-auto"> <!-- mr-auto sve vuce udesno -->
+            {% if user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link" href="#">Hii {{ user.username }}</a>
+              </li>
+              {% if user.is_superuser %}
+                <li class="nav-item">
+                  <a class="nav-link" href="/admin">Admin Dashboard</a>
+                </li>
+              {% endif %}
+              <li class="nav-item">
+                <a class="nav-link" href="/accounts/logout">Logout</a>
+              </li>
+            {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="/accounts/login">Login</a>
+              </li>
+            {% endif %}
+          </ul>
         </div>
       </nav>
 
