@@ -7,4 +7,5 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('<int:image_id>/', views.detail, name='detail'),           # ako imamo images/broj/ onda to renderira detail
     path('<int:image_id>/comment', views.comment, name='comment'),  # ako imamo images/broj/comment onda se to salje na views.comment
+    path('new', views.create_image, name="create_image"),   # putanja: localhost8000/images/new, app:create_image
 ]

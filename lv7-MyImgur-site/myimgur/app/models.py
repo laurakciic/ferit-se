@@ -16,7 +16,6 @@ class TimeStamped(models.Model):
     class Meta:
         abstract = True
 
-
 class Image(TimeStamped):
     title = models.CharField(max_length=128, unique=True, blank=False)
     url = models.CharField(max_length=512)

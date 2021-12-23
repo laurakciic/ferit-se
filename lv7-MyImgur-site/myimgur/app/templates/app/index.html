@@ -1,22 +1,25 @@
 {% extends 'app/base.html' %}   <!-- nasljedujemo base.html -->
 
 {% block content %}
-    {% for image in images %}
-      <div class="container">
-        <div class="row">
-          <div class="col-md-2">
-            <img class="app-fit" src="{{image.url}}" alt=""/>
-          </div>
-          <div class="col-md-10">
-            <div class="date">
-              <p class="red">
-              Score: {{ image.votes }}; Published: {{ image.pub_date }};  Comments: {{ image.comment_set.count }} 
-              </p>
-            </div>
-            <h2><a href="{% url 'app:detail' image.id %}">{{ image.title }}</a></h2>
-            <p>{{ image.description|linebreaksbr }}</p>
-          </div>
-        </div>
+  <div class="row">
+    <div class="col-md-10">
+      <p><a href="{% url 'app:create_image' %}">Submit new image</a></p>
+    </div>
+  </div>
+  {% for image in images %}
+    <div class="row">
+      <div class="col-md-2">
+        <img class="app-fit" src="{{image.url}}" alt=""/>
       </div>
-    {% endfor %}
+      <div class="col-md-10">
+        <div class="date">
+          <p class="red">
+          Score: {{ image.votes }}; Published: {{ image.pub_date }};  Comments: {{ image.comment_set.count }} 
+          </p>
+        </div>
+        <h2><a href="{% url 'app:detail' image.id %}">{{ image.title }}</a></h2>
+        <p>{{ image.description|linebreaksbr }}</p>
+      </div>
+    </div>
+  {% endfor %}
 {% endblock %}
