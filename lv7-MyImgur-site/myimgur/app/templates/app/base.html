@@ -41,15 +41,18 @@
               </li>
               {% if user.is_superuser %}
                 <li class="nav-item">
-                  <a class="nav-link" href="/admin">Admin Dashboard</a>
+                  <a class="nav-link" href="/admin">Admin Dashboard</a>   <!-- hardcoded generiranje ruta -->
                 </li>
               {% endif %}
               <li class="nav-item">
-                <a class="nav-link" href="/accounts/logout">Logout</a>
+                <a class="nav-link" href="{% url 'logout' %}">Logout</a>  <!-- dinamicko generiranje ruta -->
               </li>
             {% else %}
               <li class="nav-item">
-                <a class="nav-link" href="/accounts/login">Login</a>
+                <a class="nav-link" href="{% url 'login' %}">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'accounts:signup' %}">Signup</a>
               </li>
             {% endif %}
           </ul>
