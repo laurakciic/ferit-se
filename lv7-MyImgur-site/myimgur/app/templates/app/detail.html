@@ -1,0 +1,56 @@
+{% extends 'app/base.html' %}
+
+<!-- css klase dodane u app.css
+- npr u 14.liniji na sliku dodajemo fit kako bi stala u 6 kolona odredene za taj container (linija 9) -->
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="date">
+        {{ image.pub_date }}
+      </div>
+      <h2>{{ image.title }}</h2>
+      <img class="app-fit" src="{{image.url}}" alt=""/>
+    </div>
+    <div class="col-md-6">
+      <h3>Description</h3>
+      <!-- django template engine omogucuje filtere 
+      - linebreaksbr filter ce svaki \n u tekstu pretvoriti u br element (novi red) -->
+      <p>{{ image.description|linebreaksbr }}</p>
+      <!-- ispisivanje podataka za komentare -->
+      <h3>Comments</h3>
+      {% for comment in comments %}
+        <div class="border comment">
+          
+          <p class="red">
+            Author: {{ comment.author }} ({{comment.created_at}})
+          </p>
+          <p class="secondary">
+            {{ comment.text }}
+          </p>
+        </div>
+      {% endfor %}
+
+      <h2>Post a comment</h2>
+      {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+      <!-- forma za submit komentara -->
+      <form action="{% url 'app:comment' image.id %}" method="post" class="border">
+        {% csrf_token %}
+        <p>
+          <label for="comment_author">Author </label><br>
+          <input type="text" name="author" id="comment_author" value="">
+        </p>
+        <p>
+          <label for="comment_text">Comment </label><br>
+          <textarea  name="comment" id="comment_text" rows="4" cols="50">
+          </textarea>
+        </p>
+
+        <input type="submit" value="Vote">
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
