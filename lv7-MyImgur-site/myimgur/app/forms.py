@@ -1,4 +1,5 @@
-from .models import Image, Comment # jer za njih cemo imat forme
+from bootstrap_datepicker_plus.widgets import DateTimePickerInput
+from .models import Image, Comment      # jer za njih cemo imat forme
 from django.forms import ModelForm
 
 # nova slika: 
@@ -11,4 +12,4 @@ class ImageForm(ModelForm):
     class Meta:
         model = Image   # model koji gadamo
         fields = ['title', 'url', 'description', 'pub_date']    # fieldovi koje zelimo u formi
-
+        widgets = { 'pub_date': DateTimePickerInput() }

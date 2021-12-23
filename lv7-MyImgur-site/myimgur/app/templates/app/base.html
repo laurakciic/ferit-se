@@ -3,7 +3,6 @@
   <head>
     <title>My Lame Imgur</title>
 
-
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" rel="stylesheet"/>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous" integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" crossorigin="anonymous" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"></script>
@@ -11,9 +10,9 @@
 
     <!-- omogucuje dodavanje pojedinih head elemenata unutar samog view templatea
     - npr u detail.html mozemo dodati nesto novo u block extrahead i onda ce s to za samo tu 
-      stranicu dodat ovdje u headove 
+      stranicu dodat ovdje u headove (radi dodavanja includeova ili slicnog)
     - npr ako na tocno odredenoj stranici trebamo jos nekakvu js skriptu uvuc ili css za samo tu str itd. -->
-    {% block extrahead %}
+    {% block extrahead %} <!-- ono sto je u view templateu upisano pod extrahead ce dodat ovdje -->
     {% endblock %}
 
     <link rel="stylesheet" href="{% static 'app/css/app.css' %}">
