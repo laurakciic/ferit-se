@@ -1,4 +1,6 @@
 /lv3/pero
 /lv5/django/
-/lv7 (MyLameImgur site)/django/
-\lv7 (MyLameImgur site)\myimgur\imgur\__pycache__
+/lv7-MyImgur-site/django/
+/lv7-MyImgur-site/myimgur/imgur/__pycache__
+__pycache__/
+*.pyc
