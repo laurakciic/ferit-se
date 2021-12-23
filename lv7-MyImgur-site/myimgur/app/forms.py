@@ -13,3 +13,8 @@ class ImageForm(ModelForm):
         model = Image   # model koji gadamo
         fields = ['title', 'url', 'description', 'pub_date']    # fieldovi koje zelimo u formi
         widgets = { 'pub_date': DateTimePickerInput() }
+
+class CommentForm(ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['author', 'text']
