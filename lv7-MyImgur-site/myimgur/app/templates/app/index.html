@@ -14,7 +14,9 @@
       <div class="col-md-10">
         <div class="date">
           <p class="red">
-          Score: {{ image.votes }}; Published: {{ image.pub_date }};  Comments: {{ image.comment_set.count }} 
+          Published: {{ image.pub_date }};  Comments: {{ image.comment_set.count }};
+          <a href="{% url 'app:edit_image' image.id %}">Edit</a> |  <!-- ne zaboravi poslat image_id jer moras znat koju sliku updateas -->
+          {% include "includes/delete_image_link.html" with image=image %} <!-- image=image jer koristi image -->
           </p>
         </div>
         <h2><a href="{% url 'app:detail' image.id %}">{{ image.title }}</a></h2>

@@ -1,0 +1,12 @@
+<a href="#" id="delete_{{image.id}}">Delete</a>           <!-- delete forma se okida na ovaj link, za image s id 1 link ce imat delete_1 a forma delete_form_1 -->
+<form action="{% url 'app:delete_image' image.id %}"      
+      method="post"
+      id="delete_form_{{ image.id }}"
+      class="hidden">   <!-- hidden zato sto necemo mi osobno submitat ovu formu nego ce js -->
+    {% csrf_token %}
+</form>
+<script charset="utf-8">
+    $(document).on('click', '#delete_{{image.id}}', function(){   // kad se dogodi click na delete 1/2/.., pozovi ovu fju
+        $('#delete_form_{{image.id}}').submit();    // nadji mi tu formu s tim id, kad nades taj element, submitaj ga
+    });
+</script>
