@@ -1,17 +1,25 @@
-{% extends 'app/base.html' %}   
+{% extends 'app/base.html' %}   <!-- ovaj template ucitava se kad otvorimo localhost accounts login  -->
 
-{% block content %}       <!-- ovaj template ucitava se kad otvorimo localhost accounts login  -->
-<div class="container">
+{% block content %}       
     <div class="row">   
-        <h2>Sign up</h2>
+        <div class="col-md-12">
+            <h2 class="text-center">Sign up</h2>
+        </div>
     </div>
-    <div class="row">                                   <!-- submitat ce post request na isti url i uhvatit ce ga ista ova -->
-        <form method="post" accept-charset="utf-8">     <!-- akcija django.contrib.auth.urls koja ce obraditi ovu formu -->
-            {% csrf_token %}
-            {{ form.as_p }}   <!-- renderirat ce formu kao paragrafe -->
+    <!-- submitat ce post request na isti url i uhvatit ce ga ista ova -->
+    <form method="post" accept-charset="utf-8">     <!-- akcija django.contrib.auth.urls koja ce obraditi ovu formu -->
+        {% csrf_token %}
 
-            <input type="submit" value="Sign up" class="btn btn-primary">
-        </form>
-    </div>
-</div>
+        <!-- renderiranje bs4_form.htmla, no buduci da je django template, moramo mu reci sta je form -->
+        <!-- jer taj include nema pristup kontekstu da zna tocno sta je form pa mu kazemo -->
+        <!-- form u tebi je ovaj form kojem imamo pristup iz konteksta (form=form) -->
+        {% include 'includes/bs4_form.html' with form=form %}
+
+        <div class="row">   
+            <div class="col-md-8 mx-auto">
+                <input type="submit" value="Sign up" class="btn btn-primary">
+            </div>
+        </div>
+
+    </form>
 {% endblock %}
