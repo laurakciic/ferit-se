@@ -32,7 +32,7 @@ def create_image(request):              # image_id nije potreban jer kad pravimo
     return render(request, 'app/create_image.html', context)    # u render ide request, template i context
 
 def comment(request, image_id):         # na samom detail viewu cemo napravit tu formu i onda ce ovaj comment obradivat samo POST req
-    if request.method == 'POST':
+    if request.method == 'POST' and request.user.is_authenticated:
         image = get_object_or_404(Image, pk=image_id)
         form = CommentForm(request.POST)
         if form.is_valid():

@@ -32,19 +32,22 @@
         </div>
       {% endfor %}
 
-      <h2>Post a comment</h2>
-      {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+      {% if user.is_authenticated %}
+        <h2>Post a comment</h2>
+        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-      <!-- forma za submit komentara -->
-      <form action="{% url 'app:comment' image.id %}" method="post" class="border">
-        {% csrf_token %}
-        {% include "includes/bs4_form.html" with form=form %}
+        <!-- forma za submit komentara -->
+        <form action="{% url 'app:comment' image.id %}" method="post" class="border">
+          {% csrf_token %}
+          {% include "includes/bs4_form.html" with form=form %}
 
-        <!-- submit button moramo uvijek dodat lokalno iako includeamo formu iznad-->
-        <input type="submit" 
-               value="Post Comment"
-               class="btn btn-lg btn-primary btn-block">
-      </form>
+          <!-- submit button moramo uvijek dodat lokalno iako includeamo formu iznad-->
+          <input type="submit" 
+                value="Post Comment"
+                class="btn btn-lg btn-primary btn-block">
+        </form>
+      {% endif %}
+      
     </div>
   </div>
 </div>
