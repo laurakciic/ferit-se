@@ -59,6 +59,7 @@ def comment(request, image_id):         # na samom detail viewu cemo napravit tu
         if form.is_valid():
             comment = form.save(commit=False)   # commit false govori da se ne sprema u bazu, napravit ce se instanca modela comment ali se nece snimit u bazu dok ga mi ne snimimo zbog toga sto mi u nasu formu ne upisujemo image, znamo za koji image submitamo komentar (zbog image_id)
             comment.image = image               # u instancu modela comment spremi ovaj image koji smo dobili iz get_obj_or_404
+            comment.user = request.user         # postavlja usera za taj komentar
             comment.save()                      # sad je spremljeno u bazu
             return HttpResponseRedirect(reverse('app:detail', args=(comment.image.id,)))   # pokazujemo sliku na kojoj se nalazimo (app:detail)
         else:

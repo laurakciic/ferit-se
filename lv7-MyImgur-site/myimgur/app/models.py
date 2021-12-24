@@ -50,11 +50,15 @@ class Image(TimeStamped):
 class Comment(TimeStamped):
     image = models.ForeignKey(Image, on_delete=models.CASCADE)  
     text = models.TextField(blank=False)
-    author = models.CharField(max_length=256, blank=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.text[:80]
-    
+
+    def author(self):   # implementacija ce nam bacat gresku (jer smo trazili field autora na raznim mjestima a tog fielda vise nemamo, migracija ce ga obrisat) pa umjesto da je autor field, rec cemo da je to metoda (da si olaksamo, posto autor i user su ista stvar, za autora cemo koristit user name)
+        return self.user.username   # self.user jer sam user kao var ne postoji nego je to ovaj user definiran na samom komentaru (lin 53)
+        
+
 # Image i Comment nasljeduju TimeStamped, a model TimeStamped nasljeduje models.Model
 # - na ovaj nacin napravili smo svoju apstraktnu klasu (vidimo po class Meta abstract=True)
 #   sto znaci da mozemo napravit model kojeg nasi modeli nasljeduju i taj model onda uvijek ima 
