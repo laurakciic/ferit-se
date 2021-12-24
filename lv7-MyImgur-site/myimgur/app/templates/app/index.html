@@ -6,7 +6,7 @@
       <p><a href="{% url 'app:create_image' %}">Submit new image</a></p>
     </div>
   </div>
-  {% for image in images %}
+  {% for image,vote in images_with_votes %}
     <div class="row">
       <div class="col-md-2">
         <img class="app-fit" src="{{image.url}}" alt=""/>
@@ -19,6 +19,7 @@
           {% include "includes/delete_image_link.html" with image=image %} <!-- image=image jer koristi image -->
           </p>
         </div>
+        {% include "includes/vote_buttons.html" with image=image vote=vote %} <!-- ovdje vote nemamo pa u view trebamo pripremit te podatke -->
         <h2><a href="{% url 'app:detail' image.id %}">{{ image.title }}</a></h2>
         <p>{{ image.description|linebreaksbr }}</p>
       </div>

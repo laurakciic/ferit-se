@@ -1,0 +1,23 @@
+<div>   <!-- app:upvote jer smo tako dali ime ruti, takoder predajemo image.id, role i class zbog bootstrapa pravimo da nam forma ne zauzima mjesto jer se sastoji od samo jednog buttona, povuc ce se skroz ulijevo i bit ce mala -->
+    <form action="{% url 'app:upvote' image.id %}"
+          method="post"
+          role="form"                       
+          class="form-inline float-left">
+      {% csrf_token %}
+      <input type="submit"
+             value="+"    
+             class="btn {{ vote.upvote|yesno:'btn-success,' }}"/>   <!-- django engine yes/no filter umjesto if-a -->
+    </form> 
+
+    <span class="vote-score float-left">{{ image.vote_score }}</span>
+
+    <form action="{% url 'app:downvote' image.id %}"
+          method="post"
+          role="form"                       
+          class="form-inline float-left">
+      {% csrf_token %}
+      <input type="submit"
+             value="-"    
+             class="btn {{ vote.downvote|yesno:'btn-danger,' }}"/>
+    </form> 
+</div>

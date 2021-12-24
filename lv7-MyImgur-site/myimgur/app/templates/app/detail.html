@@ -1,7 +1,7 @@
 {% extends 'app/base.html' %}
 
 <!-- css klase dodane u app.css
-- npr u 14.liniji na sliku dodajemo fit kako bi stala u 6 kolona odredene za taj container (linija 9) -->
+- npr na sliku dodajemo fit kako bi stala u 6 kolona odredene za taj container -->
 
 {% block content %}
 <div class="container">
@@ -10,6 +10,10 @@
       <div class="date">
         {{ image.pub_date }}
       </div>
+
+      <!-- jer su image i vote potrebni u vote_buttons.html -->
+      {% include "includes/vote_buttons.html" with image=image vote=vote %} 
+
       <h2>{{ image.title }}</h2>
       <img class="app-fit" src="{{image.url}}" alt=""/>
     </div>

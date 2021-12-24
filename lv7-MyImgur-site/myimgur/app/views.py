@@ -1,19 +1,21 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, resolve_url
 from django.http import JsonResponse, HttpResponseRedirect
 from django.urls import reverse
-from .models import Image, Comment
+from .models import Image, Comment, Vote
 from .forms import ImageForm, CommentForm
 
 # Create your views here.
 
 def index(request):
     images = Image.objects.order_by('-pub_date')        # povlacenje objekata, sortiranje po pub dateu
-    context = { 'images': images}                       # postavimo ih u context
+    votes = [ image.vote_by(request.user) for image in images ]     # vote_by ce nam vratit ili vote (ako vote postoji za tog usera) ili none ako ne postoji
+    context = { 'images_with_votes': zip(images, votes)}            # postavimo ih u context, zip je ugradena fja koja spaja dva polja, na ovaj nacin cemo na istim mjestima (kad iteriramo kroz tu listu, kroz images_with_votes) dobit cemo po jedan image i njegov vote   
     return render(request, 'app/index.html', context)   # pomocu rendera prosljedujemo context u index.html kao i request
 
 def detail(request, image_id):
     image = get_object_or_404(Image,pk=image_id)        # dohvaca obj iz Image modela preko pk onaj koji ima image_id
     context = {'image': image,                          # image je ovaj objekt sto se povlaci s get obj or 404
+               'vote': image.vote_by(request.user), 
                'comments': image.comment_set.all(),     # povucemo sve komentare kako bi ih mogli ispisati unutar samog templatea
                'form': CommentForm(),   # buduci da nam je stavljanje komentara sa samog detail viewa, moramo kao i u comment form, ovdje dodati praznu formu 
               }
@@ -68,4 +70,34 @@ def comment(request, image_id):         # na samom detail viewu cemo napravit tu
             })
     else:                           # ne mozemo racunat ni na koji image osim iz funkciji predanog image_id
         return HttpResponseRedirect(reverse('app:detail', args=(image_id,)))  
+
+def vote(request, image_id, upvote):
+    image = get_object_or_404(Image, pk=image_id)
+    vote = Vote.objects.filter(user=request.user, image=image).first() # select * from vote where user.id = id usera iz req and where image_id = id slike, first() daje prvi element (isto kao limit 1)
+    if vote:
+        if vote.upvote == upvote:   # ako je dvaput kliknemo upvote ili downvote zelimo obrisat vote
+            vote.delete()
+            return None
+        else:
+            vote.upvote = upvote    # ako je napravio upvote i klikne na upvote, ovdje ce se pronac taj vote, postavit ce mu se ponovo upvote i to ce se spremiti
+    else:
+        vote = Vote(user=request.user, image=image, upvote=upvote)  # ako je vec voteao i klikne na downvote, onda ce se taj vote pronac i upvote se promijenit u downvote i to ce se spremit
+    try:
+        vote.full_clean()   # ciscenje modela - vrsenje validacije, ako vec postoji da je isti user voteao na isti image, onda ce se constraint iz admina okinit i ovdje
+        vote.save()
+    except:
+        return None         # vracamo none da se nije ispravno spremilo
+    else:
+        return vote         # ako su obje naredbe prosle, vote je spremljen u bazu i vracamo taj vote
+
+# upvote i downvote su akcije pa ih mozemo napravit kao buttone, ne moramo imat skrivenu formu koju smo okidali s jqueryjem nego mozemo direktno napravit formu koja poziva upvote i downvote akcije
+def upvote(request, image_id):      # prima image_id jer smo ga urls.py isparsirali iz url-a, da bi se nesto promijenilo na serveru -> treba bit POST req, u tom slucaju onda mozemo napravit formu, i za svaki image napravimo formu i tu formu postamo
+    if request.method == 'POST' and request.user.is_authenticated:
+        vote(request, image_id, True)
+    return HttpResponseRedirect(reverse('app:detail', args=(image_id,)))   # image_id jer smo njega dobili u req
+
+def downvote(request, image_id):
+    if request.method == 'POST' and request.user.is_authenticated:
+        vote(request, image_id, False)
+    return HttpResponseRedirect(reverse('app:detail', args=(image_id,)))
     
