@@ -1,3 +1,4 @@
+from django.http.response import HttpResponse
 from django.shortcuts import render, get_object_or_404, resolve_url
 from django.http import JsonResponse, HttpResponseRedirect
 from django.urls import reverse
@@ -71,6 +72,20 @@ def comment(request, image_id):         # na samom detail viewu cemo napravit tu
             })
     else:                           # ne mozemo racunat ni na koji image osim iz funkciji predanog image_id
         return HttpResponseRedirect(reverse('app:detail', args=(image_id,)))  
+
+def ApproveComment(request, comment_id, image_id):
+    if request.method == 'POST' and request.user.is_superuser:
+        image = get_object_or_404(Image, pk=image_id)
+        try:
+            comment = get_object_or_404(Comment, pk=comment_id)
+            comment.approved = True
+            comment.save()
+            return HttpResponseRedirect(reverse('app:detail', args=(image.id,)))
+        except Comment.DoesNotExist:
+            return HttpResponse('Comment not found', status=404)
+        except Exception:
+            return HttpResponse('Internal Error', status=500)
+    return HttpResponseRedirect(reverse('app:detail', args=(image_id,)))
 
 def vote(request, image_id, upvote):
     image = get_object_or_404(Image, pk=image_id)

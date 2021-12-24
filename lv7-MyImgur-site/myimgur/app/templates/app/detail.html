@@ -23,18 +23,28 @@
       - linebreaksbr filter ce svaki \n u tekstu pretvoriti u br element (novi red) -->
       <p>{{ image.description|linebreaksbr }}</p>
       <!-- ispisivanje podataka za komentare -->
-      <h3>Comments</h3>
-      {% for comment in comments %}
-        <div class="border comment">
-          
-          <p class="red">
-            Author: {{ comment.author }} ({{comment.created_at}})
-          </p>
-          <p class="secondary">
-            {{ comment.text }}
-          </p>
-        </div>
-      {% endfor %}
+      
+      {% if request.user.is_superuser %}
+        <h3>Comments</h3>
+        {% for comment in comments %}
+          <div class="border comment">
+            
+            <p class="red">
+              Author: {{ comment.author }} ({{comment.created_at}})
+
+              {% if comment.isNotApproved %}
+                <a href="{% url 'app:approve_comment' image.id comment.id %}">
+                  <button>Approve</button>
+                </a>
+              {% endif %}
+
+            </p>
+            <p class="secondary">
+              {{ comment.text }}
+            </p>
+          </div>
+        {% endfor %}
+      {% endif %}
 
       {% if user.is_authenticated %}
         <h2>Post a comment</h2>
