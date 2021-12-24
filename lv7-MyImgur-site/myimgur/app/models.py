@@ -29,7 +29,7 @@ class Image(TimeStamped):
         return self.title
 
     def comments_count(self):
-        return image.comment_set.count()    # vraca broj komentara pomocu menagera comment_set, zato sto je komentar preko foreign keya (lin 38) povezan gore na image
+        return self.image.comment_set.count()    # vraca broj komentara pomocu menagera comment_set, zato sto je komentar preko foreign keya (lin 38) povezan gore na image
                                             
     def vote_score(self):
         upvotes = self.vote_set.filter(upvote=True).count()   # vote_set je menadzer svih voteova vezanih na image i s njim mozemo radit razlicita filtriranja
@@ -57,7 +57,7 @@ class Comment(TimeStamped):
 
     def author(self):   # implementacija ce nam bacat gresku (jer smo trazili field autora na raznim mjestima a tog fielda vise nemamo, migracija ce ga obrisat) pa umjesto da je autor field, rec cemo da je to metoda (da si olaksamo, posto autor i user su ista stvar, za autora cemo koristit user name)
         return self.user.username   # self.user jer sam user kao var ne postoji nego je to ovaj user definiran na samom komentaru (lin 53)
-        
+
 
 # Image i Comment nasljeduju TimeStamped, a model TimeStamped nasljeduje models.Model
 # - na ovaj nacin napravili smo svoju apstraktnu klasu (vidimo po class Meta abstract=True)
